@@ -29,10 +29,13 @@ class GoogleLogout extends Component {
   }
 
   signOut() {
-    const auth2 = window.gapi.auth2.getAuthInstance()
-    if (auth2 != null) {
-      auth2.signOut().then(this.props.onLogoutSuccess)
+    let auth2 = window.gapi.auth2.getAuthInstance()
+    if (!auth2) {
+      auth2 = window.gapi.auth2.init({
+        clientId: this.props.clientId,
+      })
     }
+    auth2.signOut().then(this.props.onLogoutSuccess)
   }
 
   render() {
@@ -78,6 +81,7 @@ class GoogleLogout extends Component {
 }
 
 GoogleLogout.propTypes = {
+  clientId: PropTypes.string.isRequired,
   buttonText: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node,

@@ -32,7 +32,7 @@ class GoogleLogout extends Component {
     let auth2 = window.gapi.auth2.getAuthInstance()
     if (!auth2) {
       auth2 = window.gapi.auth2.init({
-        clientId: this.props.clientId,
+        client_id: this.props.clientId,
       })
     }
     auth2.signOut().then(this.props.onLogoutSuccess)

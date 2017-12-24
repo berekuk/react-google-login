@@ -24,22 +24,28 @@ class GoogleLogout extends Component {
         this.setState({
           disabled: false,
         })
+        if (!window.gapi.auth2.getAuthInstance()) {
+          const params = {
+            client_id: this.props.clientId,
+            cookie_policy: 'single_host_origin',
+            fetch_basic_profile: false,
+            scope: 'profile email',
+            ux_mode: 'popup',
+          }
+          window.gapi.auth2.init(params);
+        }
       })
     })
   }
 
   signOut() {
-    let auth2 = window.gapi.auth2.getAuthInstance()
-    if (!auth2) {
-      auth2 = window.gapi.auth2.init({
-        client_id: this.props.clientId,
-        cookie_policy: 'single_host_origin',
-        fetch_basic_profile: false,
-        scope: 'profile email',
-        ux_mode: 'popup',
-      })
+    const auth2 = window.gapi.auth2.getAuthInstance()
+    if (auth2) {
+      auth2.signOut().then(this.props.onLogoutSuccess)
+    } else {
+      console.error('auth2 is not initialized!')
+      this.props.onLogoutSuccess()
     }
-    auth2.signOut().then(this.props.onLogoutSuccess)
   }
 
   render() {

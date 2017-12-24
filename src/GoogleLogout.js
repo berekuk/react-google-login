@@ -33,6 +33,10 @@ class GoogleLogout extends Component {
     if (!auth2) {
       auth2 = window.gapi.auth2.init({
         client_id: this.props.clientId,
+        cookie_policy: 'single_host_origin',
+        fetch_basic_profile: false,
+        scope: 'profile email',
+        ux_mode: 'popup',
       })
     }
     auth2.signOut().then(this.props.onLogoutSuccess)

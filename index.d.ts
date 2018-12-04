@@ -75,6 +75,7 @@ export interface GoogleLoginProps {
   readonly disabled?: boolean;
   readonly autoLoad?: boolean;
   readonly uxMode?: string;
+  readonly render?: (props?: { onClick: () => void }) => JSX.Element;
 }
 
 export class GoogleLogin extends Component<GoogleLoginProps, {}> {

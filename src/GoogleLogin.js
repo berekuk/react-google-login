@@ -97,8 +97,13 @@ class GoogleLogin extends Component {
   }
 
   render() {
-    const { tag, type, style, className, disabledStyle, buttonText, children } = this.props
+    const { tag, type, style, className, disabledStyle, buttonText, children, render } = this.props
     const disabled = this.state.disabled || this.props.disabled
+
+    if (render) {
+      return render({ onClick: this.signIn })
+    }
+
     const initialStyle = {
       display: 'inline-block',
       background: '#d14836',
@@ -165,7 +170,8 @@ GoogleLogin.propTypes = {
   uxMode: PropTypes.string,
   isSignedIn: PropTypes.bool,
   responseType: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  render: PropTypes.func
 }
 
 GoogleLogin.defaultProps = {
